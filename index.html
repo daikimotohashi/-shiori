@@ -38,7 +38,9 @@
         .hidden {
             display: none;
         }
-        input[type="text"] {
+        input[type="text"], button {
+            width: 100%;
+            box-sizing: border-box;
             padding: 10px;
             font-size: 16px;
             width: calc(100% - 120px);
@@ -91,7 +93,7 @@
             return str.replace(/\s+/g, "").toUpperCase();
         }
         function showCelebration() {
-            const container = document.body;
+            const container = document.getElementById("fireworks-container");
             fireworks = new Fireworks.default(container, {
                 rocketsPoint: { min: 0.2, max: 0.8 },
                 hue: { min: 0, max: 360 },
@@ -155,7 +157,8 @@
 
             <input type="text" id="answer" placeholder="答えを入力">
             <button onclick="checkAnswer()">送信</button>
-            <p id="result"></p>
+            <div id="fireworks-container" style="position: relative; height: 200px;"></div>
+<p id="result"></p>
         </section>
     </div>
 </body>
