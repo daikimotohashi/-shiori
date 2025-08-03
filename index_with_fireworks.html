@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>旅行のしおり</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #f9f9f9, #e6f0ff);
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        section {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .hint {
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 120px);
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 10px 16px;
+            font-size: 16px;
+            margin-top: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .correct {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function normalizeInput(str) {
+            return str.replace(/\s+/g, "").toUpperCase();
+        }
+
+        function checkAnswer() {
+            const userAnswer = normalizeInput(document.getElementById("answer").value);
+            const correctAnswer = "IZUCOCOGLAMPINGRESORT";
+            const result = document.getElementById("result");
+            if (userAnswer === correctAnswer) {
+                result.innerHTML = '正解です！<br><strong>伊豆COCOグランピングリゾート</strong><br><a href="https://www.izucoco.com/" target="_blank">https://www.izucoco.com/</a>';
+                result.classList.add("correct");
+                showCelebration();
+            } else {
+                result.innerHTML = "違います。もう一度考えてみてください。";
+                result.classList.remove("correct");
+            }
+        }
+
+        function toggleHint() {
+            const hint = document.getElementById("hintText");
+            hint.classList.toggle("hidden");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🌴 旅のしおり</h1>
+
+        <section>
+            <h2>1日目</h2>
+            <ul>
+                <li>昼：城ケ崎海岸・一碧湖</li>
+                <li>夕方：泊る所へ</li>
+            </ul>
+            <h2>2日目</h2>
+            <ul>
+                <li>朝：大室山</li>
+                <li>昼：阿蘭陀館・さわやか</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🔍 なぞなぞ：泊まる場所を当てよう！</h2>
+            <p>次の数列をすべてアルファベットに変換し、スペースごとに単語として読むと、ある宿泊施設の正式名称になる。</p>
+            <p><strong>9 26 21 &nbsp;&nbsp; 3 15 3 15 &nbsp;&nbsp; 7 12 1 13 16 9 14 7 &nbsp;&nbsp; 18 5 19 15 18 20</strong></p>
+
+            <button onclick="toggleHint()">ヒントを見る</button>
+            <p id="hintText" class="hidden hint">アルファベットに変換して、単語を区切って読んでみよう。</p>
+
+            <input type="text" id="answer" placeholder="答えを入力">
+            <button onclick="checkAnswer()">送信</button>
+            <p id="result"></p>
+        </section>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.2/dist/index.umd.min.js"></script>
+<script>
+    const container = document.body;
+    const fireworks = new Fireworks.default(container, {
+        rocketsPoint: { min: 0.2, max: 0.8 },
+        hue: { min: 0, max: 360 },
+        delay: { min: 15, max: 30 },
+        speed: 2,
+        acceleration: 1.05,
+        friction: 0.95,
+        gravity: 1.5,
+        particles: 50,
+        trace: 3,
+        explosion: 5
+    });
+
+    function showCelebration() {
+        fireworks.start();
+        setTimeout(() => {
+            fireworks.stop();
+        }, 5000);
+    }
+</script>
+
+</body>
+</html>
