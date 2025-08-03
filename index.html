@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>旅行のしおり</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.2/dist/index.umd.min.js"></script>
     <style>
         body {
             font-family: 'Noto Sans JP', sans-serif;
@@ -14,37 +15,29 @@
             color: #333;
             padding: 40px 20px;
         }
-
         .container {
             max-width: 800px;
             margin: auto;
         }
-
         h1, h2 {
             color: #2c3e50;
         }
-
         section {
             background-color: white;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             padding: 24px;
             margin-bottom: 32px;
-            transition: all 0.3s ease;
         }
-
         ul {
             padding-left: 20px;
         }
-
         .hint {
             margin-top: 10px;
         }
-
         .hidden {
             display: none;
         }
-
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
@@ -53,7 +46,6 @@
             border: 1px solid #ccc;
             border-radius: 8px;
         }
-
         button {
             padding: 10px 16px;
             font-size: 16px;
@@ -65,37 +57,66 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         button:hover {
             background-color: #2980b9;
         }
-
         .correct {
             color: #27ae60;
             font-weight: bold;
             margin-top: 10px;
+            font-size: 1.2em;
         }
-
+        .celebration {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #e74c3c;
+            animation: fadeIn 1.5s ease-in-out;
+            margin-bottom: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         a {
             color: #2980b9;
             text-decoration: none;
         }
-
         a:hover {
             text-decoration: underline;
         }
     </style>
     <script>
+        let fireworks;
         function normalizeInput(str) {
             return str.replace(/\s+/g, "").toUpperCase();
         }
-
+        function showCelebration() {
+            const container = document.body;
+            fireworks = new Fireworks.default(container, {
+                rocketsPoint: { min: 0.2, max: 0.8 },
+                hue: { min: 0, max: 360 },
+                delay: { min: 15, max: 30 },
+                speed: 2,
+                acceleration: 1.05,
+                friction: 0.95,
+                gravity: 1.5,
+                particles: 50,
+                trace: 3,
+                explosion: 5
+            });
+            fireworks.start();
+            setTimeout(() => {
+                fireworks.stop();
+            }, 5000);
+        }
         function checkAnswer() {
             const userAnswer = normalizeInput(document.getElementById("answer").value);
             const correctAnswer = "IZUCOCOGLAMPINGRESORT";
             const result = document.getElementById("result");
             if (userAnswer === correctAnswer) {
-                result.innerHTML = '正解です！<br><strong>伊豆COCOグランピングリゾート</strong><br><a href="https://www.izucoco.com/" target="_blank">https://www.izucoco.com/</a>';
+                result.innerHTML = '<div class="celebration">🎉 誕生日おめでとうございます！ 🎉</div>' +
+                    '正解です！<br><strong>伊豆COCOグランピングリゾート</strong><br>' +
+                    '<a href="https://www.izucoco.com/" target="_blank">https://www.izucoco.com/</a>';
                 result.classList.add("correct");
                 showCelebration();
             } else {
@@ -103,7 +124,6 @@
                 result.classList.remove("correct");
             }
         }
-
         function toggleHint() {
             const hint = document.getElementById("hintText");
             hint.classList.toggle("hidden");
@@ -113,7 +133,6 @@
 <body>
     <div class="container">
         <h1>🌴 旅のしおり</h1>
-
         <section>
             <h2>1日目</h2>
             <ul>
@@ -129,8 +148,7 @@
 
         <section>
             <h2>🔍 なぞなぞ：泊まる場所を当てよう！</h2>
-            <p>次の数列をすべてアルファベットに変換し、スペースごとに単語として読むと、ある宿泊施設の正式名称になる。</p>
-            <p><strong>9 26 21 &nbsp;&nbsp; 3 15 3 15 &nbsp;&nbsp; 7 12 1 13 16 9 14 7 &nbsp;&nbsp; 18 5 19 15 18 20</strong></p>
+            <p><strong>9 26 21   3 15 3 15   7 12 1 13 16 9 14 7   18 5 19 15 18 20</strong></p>
 
             <button onclick="toggleHint()">ヒントを見る</button>
             <p id="hintText" class="hidden hint">アルファベットに変換して、単語を区切って読んでみよう。</p>
@@ -140,30 +158,5 @@
             <p id="result"></p>
         </section>
     </div>
-
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.10.2/dist/index.umd.min.js"></script>
-<script>
-    const container = document.body;
-    const fireworks = new Fireworks.default(container, {
-        rocketsPoint: { min: 0.2, max: 0.8 },
-        hue: { min: 0, max: 360 },
-        delay: { min: 15, max: 30 },
-        speed: 2,
-        acceleration: 1.05,
-        friction: 0.95,
-        gravity: 1.5,
-        particles: 50,
-        trace: 3,
-        explosion: 5
-    });
-
-    function showCelebration() {
-        fireworks.start();
-        setTimeout(() => {
-            fireworks.stop();
-        }, 5000);
-    }
-</script>
-
 </body>
 </html>
